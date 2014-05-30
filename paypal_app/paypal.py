@@ -1,0 +1,23 @@
+import decimal
+import urllib
+import sys
+
+from django.conf import settings
+
+import models
+
+class Verify( object ):
+  result1 = ''
+  amount = ''
+  def __init__( self, txn,request ):
+    try:
+      transaction = models.Purchase.objects.get( tx=txn )
+      self.result = 'Transaction %s has already been processed' % tx
+      
+    except models.Purchase.DoesNotExist:
+      t=  request.POST.get('payment_gross')
+      self.amount = t
+      self.amount = decimal.Decimal(self.amount)
+      self.result1 = "SUCCESS"
+     
+  

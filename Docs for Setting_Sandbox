@@ -1,0 +1,17 @@
+Setting Up the PayPal Sandbox
+The PayPal Sandbox (in this document, "the Sandbox" for short) is a tool that allows developers to test applications and explore the PayPal API in an environment that is isolated from PayPal's live site. It allows you to prepare your Sandbox account for use, e.g., by setting up dummy buyer and seller accounts. It also responds to PayPal API calls in essentially the same way as the live PayPal site.
+
+Using the PayPal Sandbox
+To use the PayPal sandbox, you do the following:
+
+Create a PayPal account and log in to the Developer website at https://developer.paypal.com.
+
+Create a set of virtual Sandbox test accounts that represent the seller and buyer.
+
+Format your PayPal API requests using the details from your test accounts and run them against the Sandbox endpoint(s).
+
+Review the responses and modify your application as necessary.
+
+When your application is fully functional and free of bugs, go live by updating the API credentials and endpoint targets.
+
+For detailed information about each of these steps, see Testing Classic API Calls.
