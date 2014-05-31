@@ -92,7 +92,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # TODO - THESE MUST BE SET
-RESOURCES_DIR = '/home/anuj/paypal/resources/'
+RESOURCES_DIR = (
+    os.path.join(BASE_DIR, 'resources')
+)
 PAYPAL_PDT_TOKEN = 'LZhv3MhsplsZ03QM3N_mwm_UQ3ynejucbwNkFiqCFCeKrgSnUPkK4MNSLQe'
 PAYPAL_EMAIL = 'singhanuj115@gmail.com'
 PAYPAL_RETURN_URL = 'http://agile-brushlands-9495.herokuapp.com/'

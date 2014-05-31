@@ -95,7 +95,7 @@ STATIC_URL = '/static/'
 RESOURCES_DIR = '/home/anuj/paypal/resources/'
 PAYPAL_PDT_TOKEN = 'LZhv3MhsplsZ03QM3N_mwm_UQ3ynejucbwNkFiqCFCeKrgSnUPkK4MNSLQe'
 PAYPAL_EMAIL = 'singhanuj115@gmail.com'
-PAYPAL_RETURN_URL = 'http://127.0.0.1:8000'
+PAYPAL_RETURN_URL = 'http://agile-brushlands-9495.herokuapp.com/'
 
 # sandbox
 PAYPAL_URL = 'https://www.sandbox.paypal.com/au/cgi-bin/webscr'
