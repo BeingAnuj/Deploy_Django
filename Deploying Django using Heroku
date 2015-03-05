@@ -1,0 +1,131 @@
+                                             Getting Started with Django on Heroku
+
+:: Prerequisites
+
+Python 
+Virtualenv
+Postgres
+Heroku Account
+
+
+::STARTING DJANGO APP INSIDE A "VIRTUALENV"
+
+1 Creating a top level root directory 
+$ mkdir django $$ cd hello
+
+2 Creating a Python Virtualenv
+$ virtualenv venv
+
+>> If presently used VIRTUALENV came with your ubuntu pacakage then
+$ virtualenv  --no-site-packages venv  
+I told virtualenv to not use the system site-packages
+
+3  Activating the VIRTUALENV 
+$ source venv/bin/activate
+
+4  Next is installing our application's dependencies with pip for our new virtualenvironment
+$ pip install django-toolbelt
+
+5  Having a clean python environment to work on , we create a new sample Django Application
+$ django-admin.py startproject hello .
+>> the (.) tells django to put the extract in current directory
+
+6  CREATING A PROCFILE
+A procfile is for declaring what commands are run by any applications dyno(a single weight container running user-specified commands)
+>>Putting following text in Procfile
+web: gunicorn hello.wsgi
+Think of a running dyno as a lightweight, secure, virtualized Unix container that contains your application slug in its file system.
+
+7 Starting process type defined in Procfile
+$ foreman start
+Ctrl-C to exit
+
+8  Specifying dependecies with Pip
+Dependencies are needed in order to build and run the application.
+Heroku does this by using a file requirements.txt
+>>requirements.txt
+Django==1.6.5
+argparse==1.2.1
+dj-database-url==0.3.0
+dj-static==0.0.5
+django-toolbelt==0.0.1
+gunicorn==18.0
+psycopg2==2.5.3
+pystache==0.5.4
+static==1.0.2
+wsgiref==0.1.2
+
+9  Configuring "Settings.py"
+>>Add the following at bottom of Settings.py
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
+# Static asset configuration
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+
+10  Adding the following code in "wsgi.py"
+from django.core.wsgi import get_wsgi_application
+from dj_static import Cling
+
+application = Cling(get_wsgi_application())
+
+
+:: STORING APP IN GIT
+We need to store our app in a git repository
+
+1  We first configure our repository to IGNORE files which are not used by using  ".gitignore" file
+>>.gitignore
+venv
+*.pyc
+staticfiles
+
+2 We create a new git repository and save our applied changes 
+$ git init
+Initialized empty Git repository in /home/anuj/hello/.git/
+$ git add .
+$ git commit -m "my django app"
+
+
+::  DEPLOY TO HEROKU
+Next we push the app's repository to Heroku
+
+1  Creating a place to push the app's repository to Heroku
+$ heroku create
+Creating intense-oasis-9009... done, stack is cedar
+http://intense-oasis-9009.herokuapp.com/ | git@heroku.com:intense-oasis-9009.git
+>> It adds heroku remote to our app
+
+2  Now we do a "git push" to deploy our application
+$ git push heroku master
+
+::  VISITING YOUR APPLICATION
+
+1  Instructing heroku to execute  a process type
+$ heroku ps:scale web=1
+
+2  Checking state of app's dynos
+$ heroku ps
+=== web (1X): `gunicorn hello.wsgi`
+web.1: up 2014/05/30 13:23:59 (~ 3m ago)
+
+3  Finally Visiting our App in Browser
+$ heroku open
+Opening intense-oasis-9009... done
+
+4  Viewing Logs
+$ heroku logs
+
